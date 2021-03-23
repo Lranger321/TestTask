@@ -36,22 +36,26 @@ public class Ticket {
 
     double price;
 
-    DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
-
-    public double countTime() {
+    public int countTime() {
         int departureHours = Integer.parseInt(departureTime.split(":")[0]);
         int departureMinutes = Integer.parseInt(departureTime.split(":")[1]);
         int arrivalHours = Integer.parseInt(arrivalTime.split(":")[0]);
         int arrivalMinutes = Integer.parseInt(arrivalTime.split(":")[1]);
-        int time = daysBetween() * 24;
-
-        return 0;
+        int time;
+        if (departureHours < arrivalHours) {
+            time = (arrivalHours - departureHours);
+        } else {
+            time = (daysBetween() * 24) - departureHours + arrivalHours;
+        }
+        time += ((Math.abs(departureMinutes - arrivalMinutes) > 40) ? 1 : 0);
+        return time;
     }
 
-    private int daysBetween(){
+    private int daysBetween() {
         try {
+            DateFormat dateFormat= new SimpleDateFormat("dd.MM.yy");
             long timestamp = (dateFormat.parse(departureDate).getTime() - (dateFormat.parse(departureDate).getTime()));
-            return (int)( timestamp / (1000 * 60 * 60 * 24));
+            return (int) (timestamp / (1000 * 60 * 60 * 24));
         } catch (ParseException e) {
             e.printStackTrace();
         }
