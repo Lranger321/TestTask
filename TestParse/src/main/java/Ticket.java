@@ -53,7 +53,7 @@ public class Ticket {
 
     private int daysBetween() {
         try {
-            DateFormat dateFormat= new SimpleDateFormat("dd.MM.yy");
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
             long timestamp = (dateFormat.parse(departureDate).getTime() - (dateFormat.parse(departureDate).getTime()));
             return (int) (timestamp / (1000 * 60 * 60 * 24));
         } catch (ParseException e) {
